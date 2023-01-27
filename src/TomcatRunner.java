@@ -84,9 +84,6 @@ public class TomcatRunner {
 
     private void addServlets(Tomcat tomcat, Context context) {
         List<Class<?>> servletClasses = findAllClasses(SERVLETS_PACKAGE);
-        if (servletClasses.isEmpty())
-            return;
-
         for (Class<?> servletClass : servletClasses) {
             WebServlet webServletAnn = servletClass.getAnnotation(WebServlet.class);
             if (webServletAnn == null)
@@ -106,9 +103,6 @@ public class TomcatRunner {
 
     private void addFilters(Context context) {
          List<Class<?>> filterClasses = findAllClasses(FILTERS_PACKAGE);
-         if (filterClasses.isEmpty())
-             return;
-
          for (Class<?> filterClass : filterClasses) {
              WebFilter webFilterAnn = filterClass.getAnnotation(WebFilter.class);
              if (webFilterAnn == null)
