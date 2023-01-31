@@ -13,19 +13,16 @@ public class TomcatRunner {
     private static final int DEFAULT_TOMCAT_PORT = 8080;
     private static final int DEFAULT_DEFAULT_THREADS_COUNT = 5;
     private static final String DEFAULT_CONTEXT_PATH = "/";
-    private static final String DEFAULT_BASE_DIR = "D:/temp";
 
     private final int port;
     private final int nThreads;
     private final String contextPath;
-    private final String baseDir;
     private final Tomcat tomcat = new Tomcat();
 
-    public TomcatRunner(int port, int nThreads, String contextPath, String baseDir) {
+    public TomcatRunner(int port, int nThreads, String contextPath) {
         this.port = port;
         this.nThreads = nThreads;
         this.contextPath = contextPath;
-        this.baseDir = baseDir;
         init();
     }
 
@@ -35,7 +32,6 @@ public class TomcatRunner {
 
         tomcat.setPort(port);
 
-        tomcat.setBaseDir(baseDir);
         String docBase = new File(".").getAbsolutePath();
 
         Context context = tomcat.addContext(contextPath, docBase);
@@ -144,10 +140,9 @@ public class TomcatRunner {
         optionStr = cmd.getOptionValue("t");
         int nThreads = optionStr != null ? Integer.parseInt(optionStr) : DEFAULT_DEFAULT_THREADS_COUNT;
 
-        String baseDir = cmd.getOptionValue("d", DEFAULT_BASE_DIR);
         String contextPath = cmd.getOptionValue("c", DEFAULT_CONTEXT_PATH);
 
-        TomcatRunner tomcatStarter = new TomcatRunner(port, nThreads, contextPath, baseDir);
+        TomcatRunner tomcatStarter = new TomcatRunner(port, nThreads, contextPath);
         tomcatStarter.startServer();
     }
 
@@ -180,7 +175,6 @@ public class TomcatRunner {
         Options options = new Options();
         options.addOption("p", "port", true, "порт");
         options.addOption("t", "threads", true, "брой нишки");
-        options.addOption("d", "base_dir", true, "базова директория");
         options.addOption("c", "context_path", true, "базов url");
         options.addOption("h", "help", false, "показва описание на опциите");
         return options;
