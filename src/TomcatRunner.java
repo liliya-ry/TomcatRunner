@@ -13,6 +13,7 @@ public class TomcatRunner {
     private static final int DEFAULT_TOMCAT_PORT = 8080;
     private static final int DEFAULT_DEFAULT_THREADS_COUNT = 5;
     private static final String DEFAULT_CONTEXT_PATH = "/";
+    private static final String DEFAULT_BASE_DIR = "D:/temp";
 
     private final int port;
     private final int nThreads;
@@ -32,9 +33,7 @@ public class TomcatRunner {
 
         tomcat.setPort(port);
 
-        String docBase = new File(".").getAbsolutePath();
-
-        Context context = tomcat.addContext(contextPath, docBase);
+        Context context = tomcat.addContext(contextPath, null);
         addServlets(tomcat, context);
         addFilters(context);
     }
@@ -175,6 +174,7 @@ public class TomcatRunner {
         Options options = new Options();
         options.addOption("p", "port", true, "порт");
         options.addOption("t", "threads", true, "брой нишки");
+        options.addOption("d", "base_dir", true, "базова директория");
         options.addOption("c", "context_path", true, "базов url");
         options.addOption("h", "help", false, "показва описание на опциите");
         return options;
